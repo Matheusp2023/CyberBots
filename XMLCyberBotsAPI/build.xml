@@ -14,8 +14,8 @@
         </classpath>
     </taskdef>
 
-    <target name="generate-jaxb">
-        <xjc destdir="src" package="org.ufal.cyber.xmlcyberbotsapi.xmlclasses.robot">
+    <target name="-pre-compile">
+        <xjc destdir="src" package="org.ufal.cyber.xmlcyberbotsapi.xmlclasses.robot" encoding="UTF-8">
             <schema file="src/org/ufal/cyber/xmlcyberbotsapi/resource/schema/robot.xsd"/>
         </xjc>
     </target>
