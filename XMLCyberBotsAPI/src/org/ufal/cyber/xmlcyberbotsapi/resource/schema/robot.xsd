@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="robot">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="link" minOccurs="1" maxOccurs="unbounded" type="linkType"/>
+                <xs:element name="joint" minOccurs="0" maxOccurs="unbounded" type="jointType"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="xs:string" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
+    <xs:complexType name="linkType">
+        <xs:sequence>
+            <xs:element name="visual" type="visualType" minOccurs="0"/>
+            <xs:element name="collision" type="collisionType" minOccurs="0"/>
+            <xs:element name="inertial" type="inertialType" minOccurs="0"/>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+    </xs:complexType>
+
+    <xs:complexType name="visualType">
+        <xs:sequence>
+            <xs:element name="geometry" type="geometryType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="collisionType">
+        <xs:sequence>
+            <xs:element name="geometry" type="geometryType"/>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="inertialType">
+        <xs:sequence>
+            <xs:element name="origin" type="poseType"/>
+            <xs:element name="mass">
+                <xs:complexType>
+                    <xs:attribute name="value" type="xs:double" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="geometryType">
+        <xs:choice>
+            <xs:element name="box">
+                <xs:complexType>
+                    <xs:attribute name="size" type="vector3Type" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="cylinder">
+                <xs:complexType>
+                    <xs:attribute name="length" type="xs:double" use="required"/>
+                    <xs:attribute name="radius" type="xs:double" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="sphere">
+                <xs:complexType>
+                    <xs:attribute name="radius" type="xs:double" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="mesh">
+                <xs:complexType>
+                    <xs:attribute name="filename" type="xs:string" use="required"/>
+                    <xs:attribute name="scale" type="vector3Type" use="optional"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+
+    <xs:complexType name="jointType">
+        <xs:sequence>
+            <xs:element name="parent">
+                <xs:complexType>
+                    <xs:attribute name="link" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="child">
+                <xs:complexType>
+                    <xs:attribute name="link" type="xs:string" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="axis" minOccurs="0">
+                <xs:complexType>
+                    <xs:attribute name="xyz" type="vector3Type" use="required"/>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="limit" minOccurs="0">
+                <xs:complexType>
+                    <xs:attribute name="lower" type="xs:double" use="required"/>
+                    <xs:attribute name="upper" type="xs:double" use="required"/>
+                    <xs:attribute name="effort" type="xs:double" use="required"/>
+                    <xs:attribute name="velocity" type="xs:double" use="required"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+        <xs:attribute name="name" type="xs:string" use="required"/>
+        <xs:attribute name="type" type="jointTypeEnum" use="required"/>
+    </xs:complexType>
+
+    <xs:simpleType name="jointTypeEnum">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="revolute"/>
+            <xs:enumeration value="continuous"/>
+            <xs:enumeration value="prismatic"/>
+            <xs:enumeration value="fixed"/>
+            <xs:enumeration value="floating"/>
+            <xs:enumeration value="planar"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="vector3Type">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\s*-?\d+(\.\d+)?\s+-?\d+(\.\d+)?\s+-?\d+(\.\d+)?\s*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="poseType">
+        <xs:sequence/>
+        <xs:attribute name="xyz" type="vector3Type" use="optional"/>
+        <xs:attribute name="rpy" type="vector3Type" use="optional"/>
+    </xs:complexType>
+
+</xs:schema>

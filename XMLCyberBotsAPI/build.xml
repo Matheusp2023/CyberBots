@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="org.ufal.cyber.xmlcyberbotsapi" default="netbeans" basedir=".">
+    <description>Builds, tests, and runs the project org.ufal.cyber.xmlcyberbotsapi.</description>
+    <import file="nbproject/build-impl.xml"/>
+
+    <taskdef name="xjc" classname="com.sun.tools.xjc.XJCTask">
+        <classpath>
+            <pathelement location="release/modules/ext/jaxb-xjc.jar"/>
+            <pathelement location="release/modules/ext/jaxb-impl.jar"/>
+            <pathelement location="release/modules/ext/jaxb-core.jar"/>
+            <pathelement location="release/modules/ext/jakarta.xml.bind-api.jar"/>
+            <pathelement location="release/modules/ext/jakarta.activation-api.jar"/>
+            <pathelement location="release/modules/ext/angus.activation.jar"/>
+        </classpath>
+    </taskdef>
+
+    <target name="-pre-compile">
+        <xjc destdir="src" package="org.ufal.cyber.xmlcyberbotsapi.xmlclasses.robot" encoding="UTF-8">
+            <schema file="src/org/ufal/cyber/xmlcyberbotsapi/resource/schema/robot.xsd"/>
+        </xjc>
+    </target>
+</project>

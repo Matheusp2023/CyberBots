@@ -1,7 +1,9 @@
-nbproject/private/
+**/nbproject/private/
 build/
 dist/
 nbbuild/
 nbdist/
 nbactions.xml
 nb-configuration.xml
+XMLCyberBotsAPI/src/org/ufal/cyber/xmlcyberbotsapi/xmlclasses
+/XMLCyberBotsAPI/nbproject/private/
